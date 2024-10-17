@@ -51,12 +51,13 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Center(
+        // widthFactor: 380,
         child: Container(
           height: 640,
-          width: 416,
+          width: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            border: Border.all(color: Colors.white.withOpacity(0.2)),
             color: Colors.black.withOpacity(0.5),
           ),
           child: BackdropFilter(
