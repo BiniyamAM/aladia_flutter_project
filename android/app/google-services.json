@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848363865592",
+    "project_id": "aladia-login",
+    "storage_bucket": "aladia-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848363865592:android:827653934fc8dd6eee820d",
+        "android_client_info": {
+          "package_name": "com.example.aladia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuKEFxjo04_0Osti2Ii33xrpibfNQT0Ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
