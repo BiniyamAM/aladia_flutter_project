@@ -1,6 +1,5 @@
-name: Flutter CI/CD Pipeline
+name: Flutter CI/CD
 
-# Trigger the workflow on push to main or pull requests
 on:
   push:
     branches:
@@ -11,62 +10,74 @@ on:
 
 jobs:
   build:
-    name: Build and Test (Android/iOS)
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        os: [macos-latest] # macOS for building iOS (Linux for Android can also be added)
+        flutter-version: [latest]
+        channel: [stable]
 
     steps:
-      # Step 1: Check out the repository
+      # 1. Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Flutter SDK
-      - name: Check Flutter version
-        run: flutter --version
-
+      # 2. Set up Flutter environment
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.3"
-          channel: stable
-          architecture: X64
-          cache: false
+          flutter-version: ${{ matrix.flutter-version }}
+          channel: ${{ matrix.channel }}
 
-      # Step 3: Install dependencies
+      # 3. Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Run Flutter tests (for both platforms)
+      # 4. Run tests
       - name: Run tests
-        run: flutter test
+        run: flutter test --no-pub --coverage
 
-      # Step 5: Build APK (Android)
-      - name: Build APK (Android)
-        if: runner.os == 'Linux' || matrix.os == 'ubuntu-latest'
+      # 5. Build APK (for Android)
+      - name: Build APK
         run: flutter build apk --release
 
-      # Step 6: Build IPA (iOS)
-      - name: Build IPA (iOS)
-        if: runner.os == 'macOS' || matrix.os == 'macos-latest'
-        env:
-          IOS_SIGNING_CERTIFICATE: ${{ secrets.IOS_SIGNING_CERTIFICATE }}
-          IOS_PROFILE: ${{ secrets.IOS_PROFILE }}
-        run: |
-          flutter build ios --release --no-codesign
-          # Optional: Add code-signing if necessary
+      # 6. Build IPA (for iOS)
+      - name: Build IPA
+        if: runner.os == 'macOS'
+        run: flutter build ios --release
 
-      # Step 7: Upload artifacts (APK, IPA)
-      - name: Upload Android APK
-        if: runner.os == 'Linux' || matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v3
-        with:
-          name: Android APK
-          path: build/app/outputs/flutter-apk/app-release.apk
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-      - name: Upload iOS IPA
-        if: runner.os == 'macOS' || matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v3
+    steps:
+      # 1. Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Set up Flutter environment
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          name: iOS IPA
-          path: build/ios/ipa/app-release.ipa
+          flutter-version: latest
+          channel: stable
+
+      # 3. Deploy APK to Firebase App Distribution (for Android)
+      - name: Deploy APK to Firebase App Distribution
+        if: always()
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-release.apk
+
+      # 4. Deploy IPA to Firebase App Distribution (for iOS)
+      - name: Deploy IPA to Firebase App Distribution
+        if: runner.os == 'macOS'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers
+          file: build/ios/ipa/app.ipa
