@@ -1,0 +1,68 @@
+name: Flutter CI/CD Pipeline
+
+# Trigger the workflow on push to main or pull requests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test (Android/iOS)
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [macos-latest] # macOS for building iOS (Linux for Android can also be added)
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Flutter SDK
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "latest"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Step 4: Run Flutter tests (for both platforms)
+      - name: Run tests
+        run: flutter test
+
+      # Step 5: Build APK (Android)
+      - name: Build APK (Android)
+        if: runner.os == 'Linux' || matrix.os == 'ubuntu-latest'
+        run: flutter build apk --release
+
+      # Step 6: Build IPA (iOS)
+      - name: Build IPA (iOS)
+        if: runner.os == 'macOS' || matrix.os == 'macos-latest'
+        env:
+          IOS_SIGNING_CERTIFICATE: ${{ secrets.IOS_SIGNING_CERTIFICATE }}
+          IOS_PROFILE: ${{ secrets.IOS_PROFILE }}
+        run: |
+          flutter build ios --release --no-codesign
+          # Optional: Add code-signing if necessary
+
+      # Step 7: Upload artifacts (APK, IPA)
+      - name: Upload Android APK
+        if: runner.os == 'Linux' || matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: Android APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload iOS IPA
+        if: runner.os == 'macOS' || matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: iOS IPA
+          path: build/ios/ipa/app-release.ipa
