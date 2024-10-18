@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:aladia/widgets/term_&_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aladia/widgets/email_input.dart';
@@ -21,6 +22,8 @@ class _HomeState extends State<Home> {
     final isDarkMode = themeProvider.isSelected;
 
     return Scaffold(
+      backgroundColor:
+          isDarkMode ? Colors.black : Colors.white, // Background color
       appBar: AppBar(
         backgroundColor: isDarkMode ? Colors.black : Colors.white,
         actions: [
@@ -56,74 +59,61 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          height: 640,
-          width: 350,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-                color: isDarkMode
-                    ? Colors.white.withOpacity(0.2)
-                    : Colors.black.withOpacity(0.2)),
-            color: isDarkMode ? Colors.black.withOpacity(0.5) : Colors.white,
-          ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Stack(
-              children: [
-                // Borders for gradients
-                Positioned.fill(
-                  child: Opacity(
-                    opacity: 0.7,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 1,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.transparent, Colors.white],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 350,
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: isDarkMode
+                                ? Colors.white.withOpacity(0.2)
+                                : Colors.black.withOpacity(0.2),
+                          ),
+                          color: isDarkMode
+                              ? Colors.black.withOpacity(0.5)
+                              : Colors.white,
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(height: 16),
+                                TopContent(isDarkMode: isDarkMode),
+                                const SizedBox(height: 32),
+                                EmailInput(isDarkMode: isDarkMode),
+                                const SizedBox(height: 32),
+                                OrDivider(isDarkMode: isDarkMode),
+                                const SizedBox(height: 32),
+                                SocialButtons(isDarkMode: isDarkMode),
+                                const SizedBox(height: 12),
+                                TermsAndConditions(isDarkMode: isDarkMode),
+                              ],
                             ),
                           ),
                         ),
-                        const Spacer(),
-                        Container(
-                          height: 1,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.white, Colors.transparent],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 16),
-                        TopContent(isDarkMode: isDarkMode),
-                        const SizedBox(height: 32),
-                        EmailInput(isDarkMode: isDarkMode),
-                        const SizedBox(height: 32),
-                        OrDivider(isDarkMode: isDarkMode),
-                        const SizedBox(height: 32),
-                        SocialButtons(isDarkMode: isDarkMode),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

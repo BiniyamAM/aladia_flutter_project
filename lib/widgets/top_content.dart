@@ -10,13 +10,28 @@ class TopContent extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       decoration: BoxDecoration(
-        color: isDarkMode
-            ? Colors.black.withOpacity(0.8)
-            : Colors.white.withOpacity(0.8),
+        gradient: isDarkMode
+            ? LinearGradient(
+                colors: [
+                  Colors.black.withOpacity(0.9),
+                  Colors.grey.withOpacity(0.7),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : LinearGradient(
+                colors: [
+                  Colors.white.withOpacity(0.8),
+                  Colors.grey.withOpacity(0.5),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
         border: Border.all(
-            color: isDarkMode
-                ? Colors.white.withOpacity(0.2)
-                : Colors.black.withOpacity(0.2)),
+          color: isDarkMode
+              ? Colors.white.withOpacity(0.2)
+              : Colors.black.withOpacity(0.2),
+        ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -28,7 +43,7 @@ class TopContent extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -37,12 +52,18 @@ class TopContent extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: isDarkMode
+                        ? Colors.white
+                        : Colors.black, // Adjusted text color
                   ),
                 ),
+                const SizedBox(height: 4),
                 Text(
                   'Create or access your account from here',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: isDarkMode
+                        ? Colors.white70
+                        : Colors.black54, // Adjusted text color
                   ),
                 ),
               ],

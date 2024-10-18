@@ -48,15 +48,29 @@ class EmailInput extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.transparent),
-            color: isDarkMode
-                ? Colors.black.withOpacity(0.7)
-                : Colors.black.withOpacity(0.1),
+            gradient: isDarkMode
+                ? LinearGradient(
+                    colors: [
+                      Colors.black.withOpacity(0.9),
+                      Colors.grey.withOpacity(0.7),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                : LinearGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.7),
+                      Colors.grey.withOpacity(0.3),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
           ),
           child: Text(
             'Enter',
             style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
           ),
-        ),
+        )
       ],
     );
   }
