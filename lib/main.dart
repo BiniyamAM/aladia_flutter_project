@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Home(),
-      themeMode: ThemeMode.system,
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      theme: Provider.of<ThemeProvider>(context)
+          .themeData, // Apply the selected theme
     );
   }
 }

@@ -1,7 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:aladia/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:aladia/widgets/email_input.dart';
+import 'package:aladia/widgets/or_divider.dart';
+import 'package:aladia/widgets/social_buttons.dart';
+import 'package:aladia/widgets/top_content.dart';
+import 'package:aladia/theme_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,38 +15,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isSelected;
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: isDarkMode ? Colors.black : Colors.white,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: Consumer<ThemeProvider>(
-              builder: (context, themeProider, child) {
+              builder: (context, themeProvider, child) {
                 return Switch(
-                  activeColor: Colors.white.withOpacity(0.1),
-                  // trackOutlineColor:
-                  //     const MaterialStatePropertyAll(Colors.black),
+                  activeColor: isDarkMode
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.black.withOpacity(0.1),
                   inactiveThumbColor: Colors.white.withOpacity(0.1),
-                  // ignore: deprecated_member_use
-                  thumbColor:
-                      // ignore: deprecated_member_use
-                      MaterialStatePropertyAll(Colors.black.withOpacity(0.5)),
-                  inactiveTrackColor: Colors.black.withOpacity(0.5),
-                  // ignore: deprecated_member_use
-                  thumbIcon: MaterialStatePropertyAll(
-                    themeProider.isSelected
-                        ? const Icon(Icons.nights_stay)
-                        : const Icon(
-                            Icons.wb_sunny,
-                            color: Colors.white,
-                          ),
+                  thumbColor: MaterialStatePropertyAll(
+                    isDarkMode
+                        ? Colors.black.withOpacity(0.5)
+                        : Colors.white.withOpacity(0.5),
                   ),
-                  value: themeProider.isSelected,
+                  inactiveTrackColor: isDarkMode
+                      ? Colors.black.withOpacity(0.5)
+                      : Colors.black.withOpacity(0.3),
+                  thumbIcon: MaterialStatePropertyAll(
+                    themeProvider.isSelected
+                        ? const Icon(Icons.nights_stay)
+                        : const Icon(Icons.wb_sunny, color: Colors.white),
+                  ),
+                  value: themeProvider.isSelected,
                   onChanged: (value) {
-                    themeProider.toggleTheme();
+                    themeProvider.toggleTheme();
                   },
                 );
               },
@@ -51,14 +57,16 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Center(
-        // widthFactor: 380,
         child: Container(
           height: 640,
           width: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.2)),
-            color: Colors.black.withOpacity(0.5),
+            border: Border.all(
+                color: isDarkMode
+                    ? Colors.white.withOpacity(0.2)
+                    : Colors.black.withOpacity(0.2)),
+            color: isDarkMode ? Colors.black.withOpacity(0.5) : Colors.white,
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -101,13 +109,13 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: [
                         const SizedBox(height: 16),
-                        _buildTopContent(),
+                        TopContent(isDarkMode: isDarkMode),
                         const SizedBox(height: 32),
-                        _buildEmailInput(),
+                        EmailInput(isDarkMode: isDarkMode),
                         const SizedBox(height: 32),
-                        _buildOrDivider(),
+                        OrDivider(isDarkMode: isDarkMode),
                         const SizedBox(height: 32),
-                        _buildSocialButtons(),
+                        SocialButtons(isDarkMode: isDarkMode),
                       ],
                     ),
                   ),
@@ -115,139 +123,6 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTopContent() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.8),
-        border: Border.all(color: Colors.white.withOpacity(0.2)),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          Image.asset(
-            'assets/app_icon.png',
-            height: 80,
-            width: 80,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Welcome to Aladia,',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  'Create or access your account from here',
-                  style: TextStyle(
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmailInput() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text('Enter your email', style: TextStyle(fontSize: 16)),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-          ),
-          child: const Row(
-            children: [
-              Icon(Icons.email, color: Colors.black54),
-              SizedBox(width: 8),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration.collapsed(
-                    hintText: 'Email Address',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          alignment: Alignment.center,
-          height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.transparent),
-            color: Colors.black.withOpacity(0.7),
-          ),
-          child: const Text(
-            'Enter',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildOrDivider() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(child: Divider(color: Colors.white.withOpacity(0.1))),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text('Or', style: TextStyle(color: Colors.white)),
-        ),
-        Expanded(child: Divider(color: Colors.white.withOpacity(0.1))),
-      ],
-    );
-  }
-
-  Widget _buildSocialButtons() {
-    return Column(
-      children: [
-        _buildSocialButton('Continue with Google', 'assets/google.png'),
-        const SizedBox(height: 16),
-        _buildSocialButton('Continue with Facebook', 'assets/facebook.png'),
-        const SizedBox(height: 16),
-        _buildSocialButton('Continue with Apple', 'assets/apple.png'),
-      ],
-    );
-  }
-
-  Widget _buildSocialButton(String text, String assetPath) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.white.withOpacity(0.2)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(assetPath, height: 24),
-            const SizedBox(width: 16),
-            Text(text, style: const TextStyle(color: Colors.white)),
-          ],
         ),
       ),
     );
