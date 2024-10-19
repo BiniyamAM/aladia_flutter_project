@@ -8,6 +8,8 @@ class SocialButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildSocialButton(
             'Continue with Google', 'assets/google.png', isDarkMode),
