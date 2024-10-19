@@ -62,22 +62,22 @@ jobs:
           flutter-version: latest
           channel: stable
 
-      # # 3. Deploy APK to Firebase App Distribution (for Android)
-      # - name: Deploy APK to Firebase App Distribution
-      #   if: always()
-      #   uses: wzieba/Firebase-Distribution-Github-Action@v1
-      #   with:
-      #     appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-      #     token: ${{ secrets.FIREBASE_TOKEN }}
-      #     groups: testers
-      #     file: build/app/outputs/flutter-apk/app-release.apk
+      # 3. Deploy APK to Firebase App Distribution (for Android)
+      - name: Deploy APK to Firebase App Distribution
+        if: always()
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers
+          file: build/app/outputs/flutter-apk/app-release.apk
 
-      # # 4. Deploy IPA to Firebase App Distribution (for iOS)
-      # - name: Deploy IPA to Firebase App Distribution
-      #   if: runner.os == 'macOS'
-      #   uses: wzieba/Firebase-Distribution-Github-Action@v1
-      #   with:
-      #     appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
-      #     token: ${{ secrets.FIREBASE_TOKEN }}
-      #     groups: testers
-      #     file: build/ios/ipa/app.ipa
+      # 4. Deploy IPA to Firebase App Distribution (for iOS)
+      - name: Deploy IPA to Firebase App Distribution
+        if: runner.os == 'macOS'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers
+          file: build/ios/ipa/app.ipa
