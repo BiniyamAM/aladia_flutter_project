@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OrDivider extends StatelessWidget {
   final bool isDarkMode;
 
-  const OrDivider({Key? key, required this.isDarkMode}) : super(key: key);
+  const OrDivider({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {

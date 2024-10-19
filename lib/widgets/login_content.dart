@@ -1,5 +1,6 @@
 import 'package:aladia/pages/home.dart';
 import 'package:aladia/provider/authProvider.dart';
+import 'package:aladia/provider/theme_provider.dart';
 import 'package:aladia/widgets/top_content.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 class LoginContent extends StatelessWidget {
   final bool isDarkMode;
 
-  const LoginContent({Key? key, required this.isDarkMode}) : super(key: key);
+  const LoginContent({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,15 @@ class LoginContent extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const Home(),
+                  builder: (context) => ChangeNotifierProvider(
+                      create: (context) => ThemeProvider(),
+                      child: const Home()),
                 ),
               );
             },
             child: Container(
               alignment: Alignment.center,
-              height: 32,
+              width: 350,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -116,8 +119,9 @@ class LoginContent extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          const Home(), // Change to your desired page
+                      builder: (context) => ChangeNotifierProvider(
+                          create: (context) => ThemeProvider(),
+                          child: const Home()), // Change to your desired page
                     ),
                   );
                 }

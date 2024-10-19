@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TopContent extends StatelessWidget {
   final bool isDarkMode;
 
-  const TopContent({Key? key, required this.isDarkMode}) : super(key: key);
+  const TopContent({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {

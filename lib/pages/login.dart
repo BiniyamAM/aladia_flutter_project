@@ -1,11 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:aladia/provider/authProvider.dart';
 import 'package:aladia/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/login_content.dart'; // Import the LoginContent widget
 
 class MyLogin extends StatelessWidget {
+  const MyLogin({super.key});
+
   @override
   Widget build(BuildContext context) {
     // You can set isDarkMode based on system settings or user preference
@@ -54,7 +57,9 @@ class MyLogin extends StatelessWidget {
           ],
         ),
         body: Center(
-          child: LoginContent(isDarkMode: isDarkMode),
+          child: ChangeNotifierProvider(
+              create: (context) => AuthProvider(),
+              child: LoginContent(isDarkMode: isDarkMode)),
         ),
       ),
     );

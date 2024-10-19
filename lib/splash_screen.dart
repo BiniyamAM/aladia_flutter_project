@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class SplashScreen extends StatelessWidget {
   final bool isDarkMode;
 
-  const SplashScreen({Key? key, required this.isDarkMode}) : super(key: key);
+  const SplashScreen({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {

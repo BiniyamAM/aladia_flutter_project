@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SocialButtons extends StatelessWidget {
   final bool isDarkMode;
 
-  const SocialButtons({Key? key, required this.isDarkMode}) : super(key: key);
+  const SocialButtons({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {

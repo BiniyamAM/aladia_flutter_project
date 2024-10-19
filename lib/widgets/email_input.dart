@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class EmailInput extends StatelessWidget {
   final bool isDarkMode;
 
-  const EmailInput({Key? key, required this.isDarkMode}) : super(key: key);
+  const EmailInput({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,10 @@ class EmailInput extends StatelessWidget {
                     // Navigate to the login page
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => MyLogin(),
+                        builder: (context) => ChangeNotifierProvider(
+                          create: (context) => AuthProvider(),
+                          child: MyLogin(),
+                        ),
                       ),
                     );
                   },
@@ -68,7 +71,10 @@ class EmailInput extends StatelessWidget {
             // Navigate to the login page
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MyLogin(),
+                builder: (context) => ChangeNotifierProvider(
+                  create: (context) => AuthProvider(),
+                  child: MyLogin(),
+                ),
               ),
             );
           },

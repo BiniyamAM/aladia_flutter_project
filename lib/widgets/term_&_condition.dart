@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class TermsAndConditions extends StatelessWidget {
   final bool isDarkMode;
 
-  const TermsAndConditions({Key? key, required this.isDarkMode})
-      : super(key: key);
+  const TermsAndConditions({super.key, required this.isDarkMode});
 
   @override
   Widget build(BuildContext context) {
