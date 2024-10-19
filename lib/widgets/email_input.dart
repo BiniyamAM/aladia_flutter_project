@@ -1,6 +1,8 @@
 import 'package:aladia/pages/login.dart';
+import 'package:aladia/provider/authProvider.dart';
 import 'package:flutter/material.dart';
-// import '../widgets/login_content.dart'; // Import the LoginContent widget
+import 'package:provider/provider.dart';
+// Ensure you import your login page
 
 class EmailInput extends StatelessWidget {
   final bool isDarkMode;
@@ -33,7 +35,7 @@ class EmailInput extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: TextField(
-                  controller: emailController, // Use the controller
+                  controller: emailController,
                   style: TextStyle(
                       color: isDarkMode ? Colors.black : Colors.black),
                   decoration: InputDecoration.collapsed(
@@ -42,8 +44,10 @@ class EmailInput extends StatelessWidget {
                         color: isDarkMode ? Colors.black54 : Colors.black),
                   ),
                   onSubmitted: (value) {
-                    // Pop the current route and navigate to MyLogin
-                    Navigator.of(context).pop();
+                    // Use the Provider to set the email
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .setEmail(emailController.text);
+                    // Navigate to the login page
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => MyLogin(),
@@ -58,8 +62,10 @@ class EmailInput extends StatelessWidget {
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            // Pop the current route and navigate to MyLogin when 'Enter' button is tapped
-            Navigator.of(context).pop();
+            // Use the Provider to set the email
+            Provider.of<AuthProvider>(context, listen: false)
+                .setEmail(emailController.text);
+            // Navigate to the login page
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => MyLogin(),

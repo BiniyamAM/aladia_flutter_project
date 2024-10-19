@@ -1,4 +1,6 @@
-import 'package:aladia/theme_provider.dart';
+// ignore_for_file: deprecated_member_use
+
+import 'package:aladia/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/login_content.dart'; // Import the LoginContent widget
@@ -11,6 +13,7 @@ class MyLogin extends StatelessWidget {
 
     return MaterialApp(
       title: 'Aladia App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aladia/theme.dart'; // Ensure you are importing your theme file here
+import 'package:aladia/provider/theme.dart'; // Ensure you are importing your theme file here
 
 class ThemeProvider with ChangeNotifier {
   bool _isSelected = false;

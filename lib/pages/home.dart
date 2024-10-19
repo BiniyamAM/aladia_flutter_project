@@ -6,7 +6,7 @@ import 'package:aladia/widgets/email_input.dart';
 import 'package:aladia/widgets/or_divider.dart';
 import 'package:aladia/widgets/social_buttons.dart';
 import 'package:aladia/widgets/top_content.dart';
-import 'package:aladia/theme_provider.dart';
+import 'package:aladia/provider/theme_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

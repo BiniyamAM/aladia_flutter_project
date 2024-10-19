@@ -37,7 +37,7 @@ class TopContent extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            'assets/app_icon.png',
+            'assets/image.png',
             height: 80,
             width: 80,
             fit: BoxFit.cover,

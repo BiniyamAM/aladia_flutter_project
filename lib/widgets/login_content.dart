@@ -1,6 +1,9 @@
 import 'package:aladia/pages/home.dart';
+import 'package:aladia/provider/authProvider.dart';
 import 'package:aladia/widgets/top_content.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// Make sure to import your AuthProvider
 
 class LoginContent extends StatelessWidget {
   final bool isDarkMode;
@@ -9,15 +12,16 @@ class LoginContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController passwordController = TextEditingController();
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Container(
-      // Set the background color based on dark mode
       color: isDarkMode ? Colors.black : Colors.white,
       padding: const EdgeInsets.all(5),
       child: Column(
         children: [
           GestureDetector(
             onTap: () {
-              // Navigate to the Home widget
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const Home(),
@@ -64,6 +68,7 @@ class LoginContent extends StatelessWidget {
                   Border.all(color: isDarkMode ? Colors.white : Colors.black),
             ),
             child: TextField(
+              controller: passwordController, // Use the controller
               style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
               decoration: InputDecoration(
                 prefixIcon: Icon(
@@ -94,31 +99,68 @@ class LoginContent extends StatelessWidget {
           const SizedBox(height: 10),
           GestureDetector(
             onTap: () {
-              // Implement enter action here
+              print("password clicked");
+              // Set the password in the AuthProvider and call login
+
+              authProvider.setPassword(passwordController.text);
+              authProvider.login().then((_) {
+                // Navigate to another page or show success/error message
+                if (authProvider.errorMessage != null) {
+                  // Show error message, for example using a Snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(authProvider.errorMessage!)),
+                  );
+                } else {
+                  // Navigate to a new page on successful login
+                  print("successfull");
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const Home(), // Change to your desired page
+                    ),
+                  );
+                }
+              });
             },
             child: Container(
               alignment: Alignment.center,
               height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                gradient: LinearGradient(
-                  colors: isDarkMode
-                      ? [
-                          Colors.black.withOpacity(0.7),
+                border: Border.all(color: Colors.transparent),
+                gradient: isDarkMode
+                    ? LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.9),
                           Colors.grey.withOpacity(0.7),
-                        ]
-                      : [
-                          Colors.white.withOpacity(0.1),
-                          Colors.grey.withOpacity(0.1),
                         ],
-                ),
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      )
+                    : LinearGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.7),
+                          Colors.grey.withOpacity(0.3),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
               ),
-              child: Text(
-                'Enter',
-                style: TextStyle(
-                  color: isDarkMode ? Colors.white : Colors.black,
-                ),
-              ),
+              child: authProvider.isLoading
+                  ? CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        isDarkMode
+                            ? Colors.white
+                            : const Color.fromARGB(255, 56, 54, 54),
+                      ),
+                    )
+                  : Text(
+                      'Enter',
+                      style: TextStyle(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
             ),
           ),
         ],
