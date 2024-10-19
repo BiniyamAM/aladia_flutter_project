@@ -56,11 +56,7 @@ class MyLogin extends StatelessWidget {
             ),
           ],
         ),
-        body: Center(
-          child: ChangeNotifierProvider(
-              create: (context) => AuthProvider(),
-              child: LoginContent(isDarkMode: isDarkMode)),
-        ),
+        body: Center(child: LoginContent(isDarkMode: isDarkMode)),
       ),
     );
   }

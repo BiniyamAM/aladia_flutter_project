@@ -50,8 +50,9 @@ class EmailInput extends StatelessWidget {
                     // Navigate to the login page
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider(
-                          create: (context) => AuthProvider(),
+                        builder: (context) => ChangeNotifierProvider.value(
+                          value:
+                              Provider.of<AuthProvider>(context, listen: false),
                           child: MyLogin(),
                         ),
                       ),
@@ -71,8 +72,8 @@ class EmailInput extends StatelessWidget {
             // Navigate to the login page
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider(
-                  create: (context) => AuthProvider(),
+                builder: (context) => ChangeNotifierProvider.value(
+                  value: Provider.of<AuthProvider>(context, listen: false),
                   child: MyLogin(),
                 ),
               ),

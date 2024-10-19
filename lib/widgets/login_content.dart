@@ -1,4 +1,5 @@
 import 'package:aladia/pages/home.dart';
+import 'package:aladia/pages/logged_in.dart';
 import 'package:aladia/provider/authProvider.dart';
 import 'package:aladia/provider/theme_provider.dart';
 import 'package:aladia/widgets/top_content.dart';
@@ -115,13 +116,14 @@ class LoginContent extends StatelessWidget {
                   );
                 } else {
                   // Navigate to a new page on successful login
-                  print("successfull");
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChangeNotifierProvider(
                           create: (context) => ThemeProvider(),
-                          child: const Home()), // Change to your desired page
+                          child:
+                              const LoggedIn()), // Change to your desired page
                     ),
                   );
                 }

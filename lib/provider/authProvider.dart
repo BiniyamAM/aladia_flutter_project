@@ -13,6 +13,7 @@ class AuthProvider with ChangeNotifier {
 
   void setEmail(String email) {
     _email = email;
+    print(_email);
     notifyListeners();
   }
 
@@ -22,12 +23,16 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login() async {
+    print("providder called");
+    print(_email);
+    print(_password);
     if (_email == null || _password == null) return;
 
     _isLoading = true;
     notifyListeners();
 
     final success = await _apiService.login(_email!, _password!);
+    print(success);
     _isLoading = false;
 
     if (!success) {
