@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:aladia/provider/authProvider.dart';
 import 'package:aladia/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

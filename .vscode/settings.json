@@ -1,6 +1,5 @@
 {
-  "cSpell.words": [
-    "Widgetbook"
-  ],
-  "cmake.sourceDirectory": "/home/biniyam/aladia_flutter_project/linux"
+  "cSpell.words": ["Widgetbook"],
+  "cmake.sourceDirectory": "/home/biniyam/aladia_flutter_project/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

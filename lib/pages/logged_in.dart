@@ -1,6 +1,5 @@
 import 'package:aladia/service/tokenService.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoggedIn extends StatefulWidget {
   const LoggedIn({super.key});

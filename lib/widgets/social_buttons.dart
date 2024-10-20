@@ -8,8 +8,8 @@ class SocialButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _buildSocialButton(
             'Continue with Google', 'assets/google.png', isDarkMode),
@@ -35,16 +35,22 @@ class SocialButtons extends StatelessWidget {
                   ? Colors.white.withOpacity(0.2)
                   : Colors.black.withOpacity(0.2)),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(assetPath, height: 24),
-            const SizedBox(width: 16),
-            Text(
-              text,
-              style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center, // Center vertically
+            children: [
+              Image.asset(assetPath, height: 24),
+              const SizedBox(width: 12), // Adjusted for better spacing
+              Text(
+                text,
+                style: TextStyle(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

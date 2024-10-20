@@ -10,22 +10,51 @@ class OrDivider extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Gradient before "Or"
         Expanded(
-            child: Divider(
-                color: isDarkMode
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.1))),
+          child: Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  isDarkMode
+                      ? Colors.white.withOpacity(0)
+                      : Colors.black.withOpacity(0),
+                  isDarkMode ? Colors.white : Colors.black,
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text('Or',
-              style:
-                  TextStyle(color: isDarkMode ? Colors.white : Colors.black)),
+          child: Text(
+            'Or',
+            style: TextStyle(
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
         ),
+        // Gradient after "Or"
         Expanded(
-            child: Divider(
-                color: isDarkMode
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.1))),
+          child: Container(
+            height: 1,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  isDarkMode ? Colors.white : Colors.black,
+                  isDarkMode
+                      ? Colors.white.withOpacity(0)
+                      : Colors.black.withOpacity(0),
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -20,7 +20,7 @@ class TermsAndConditions extends StatelessWidget {
                 ? Colors.white.withOpacity(0.4)
                 : Colors.black.withOpacity(0.4), // Dynamic color based on theme
             decoration: TextDecoration
-                .underline, // Optional: if you want to underline the text
+                .none, // Optional: if you want to underline the text
           ),
         ),
       ),

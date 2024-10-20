@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class TopContent extends StatelessWidget {
   final bool isDarkMode;
@@ -11,21 +12,35 @@ class TopContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       decoration: BoxDecoration(
         gradient: isDarkMode
-            ? LinearGradient(
+            ? const LinearGradient(
                 colors: [
-                  Colors.black.withOpacity(0.9),
-                  Colors.grey.withOpacity(0.7),
+                  Colors.black, // First black gradient
+                  Colors.white, // Thin white line in the middle
+                  Colors.black, // Second black gradient
                 ],
+                stops: [
+                  0.5,
+                  1,
+                  0.5
+                ], // Very narrow transition for the thin line
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
+                transform: GradientRotation(-math.pi / 2),
               )
-            : LinearGradient(
+            : const LinearGradient(
                 colors: [
-                  Colors.white.withOpacity(0.8),
-                  Colors.grey.withOpacity(0.5),
+                  Colors.white, // First white gradient
+                  Colors.black, // Thin black line in the middle
+                  Colors.white, // Second white gradient
                 ],
+                stops: [
+                  0.5,
+                  1,
+                  0.5
+                ], // Very narrow transition for the thin line
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
+                transform: GradientRotation(-math.pi / 2),
               ),
         border: Border.all(
           color: isDarkMode
