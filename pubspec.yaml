@@ -47,6 +47,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   widgetbook_generator: ^3.9.0
+  widgetbook_cli: ^3.4.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
