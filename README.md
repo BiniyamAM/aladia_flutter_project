@@ -1,5 +1,5 @@
 
-# 🌐 **Flutter Project – PR Submission**
+# 🌐 **Flutter Project – Submission**
 
 This pull request introduces the implementation of key components and features in the Flutter project, utilizing modern architecture, state management, testing, and CI/CD tools. Below is a concise explanation of the technologies and design choices made in this project.
 
